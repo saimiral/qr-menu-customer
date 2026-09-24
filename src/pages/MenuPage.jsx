@@ -41,7 +41,7 @@ export default function MenuPage() {
     if (items.length === 0) return
     setSubmitting(true)
     try {
-      await api.post('/orders', {
+      const response = await api.post('/orders', {
         qrToken,
         items: items.map(i => ({
           menuItemId: i.menuItemId,
@@ -50,7 +50,7 @@ export default function MenuPage() {
         }))
       })
       clearCart()
-      navigate('/confirmation')
+      navigate('/confirmation', { state: { orderId: response.data.id } })
     } catch (err) {
         const message = err.response?.data?.message || 'Κάτι πήγε στραβά. Δοκίμασε ξανά.'
         alert(message)
