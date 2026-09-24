@@ -51,10 +51,11 @@ export default function MenuPage() {
       })
       clearCart()
       navigate('/confirmation')
-    } catch {
-      alert('Κάτι πήγε στραβά. Δοκίμασε ξανά.')
+    } catch (err) {
+        const message = err.response?.data?.message || 'Κάτι πήγε στραβά. Δοκίμασε ξανά.'
+        alert(message)
     } finally {
-      setSubmitting(false)
+        setSubmitting(false)
     }
   }
 
