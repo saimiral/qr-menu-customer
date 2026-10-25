@@ -13,16 +13,16 @@ const STATUS_LABELS = {
 export default function ConfirmationPage() {
   const navigate = useNavigate()
   const location = useLocation()
-  const orderId = location.state?.orderId
+  const publicToken = location.state?.publicToken
   const [status, setStatus] = useState(null)
 
   useEffect(() => {
-    if (!orderId) return
+    if (!publicToken) return
 
     let interval
 
     const poll = () => {
-      api.get(`/orders/${orderId}`)
+      api.get(`/orders/track/${publicToken}`)
         .then(res => {
           setStatus(res.data.status)
           if (res.data.status === 'PAID' && interval) {
@@ -35,7 +35,7 @@ export default function ConfirmationPage() {
     poll()
     interval = setInterval(poll, 4000)
     return () => clearInterval(interval)
-  }, [orderId])
+  }, [publicToken])
 
   return (
     <div className={styles.page}>

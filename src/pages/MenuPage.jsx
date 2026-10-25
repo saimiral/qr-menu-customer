@@ -50,7 +50,7 @@ export default function MenuPage() {
         }))
       })
       clearCart()
-      navigate('/confirmation', { state: { orderId: response.data.id } })
+      navigate('/confirmation', { state: { publicToken: response.data.publicToken } })
     } catch (err) {
         const message = err.response?.data?.message || 'Κάτι πήγε στραβά. Δοκίμασε ξανά.'
         alert(message)
